@@ -8,6 +8,7 @@
     "build": "next build && next export",
     "export": "next export",
     "build:export": "next build && next export",
+    "deploy": "pnpm run build && pnpm exec gh-pages --dotfiles -d out",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
@@ -33,6 +34,7 @@
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "gh-pages": "^5.0.0",
     "postcss": "^8.5",
     "tailwindcss": "^4.3.3",
     "typescript": "5.7.3"
