@@ -22,10 +22,9 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: '20'
-          cache: 'pnpm'
 
-      - name: Setup pnpm
-        run: corepack enable && corepack prepare pnpm@latest --activate
+      - name: Install pnpm
+        run: npm install -g pnpm@latest
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
