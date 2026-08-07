@@ -22,12 +22,16 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: '20'
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build static site
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
