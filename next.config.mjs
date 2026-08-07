@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+const basePath = '/tonal-tech-landing'
 
 const nextConfig = {
   output: 'export',
