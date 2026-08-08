@@ -27,7 +27,7 @@ jobs:
         run: npm install -g pnpm@latest
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile --allow-scripts=msw
+        run: pnpm install --no-frozen-lockfile --config.scripts-prepend-node-path=auto
 
       - name: Build static site
         run: pnpm run build
