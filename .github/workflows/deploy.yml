@@ -27,7 +27,7 @@ jobs:
         run: npm install -g pnpm@latest
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --no-frozen-lockfile --allow-scripts=msw
 
       - name: Build static site
         run: pnpm run build
