@@ -27,7 +27,7 @@ jobs:
         run: npm install -g pnpm@latest
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile && pnpm rebuild msw
+        run: pnpm install --no-frozen-lockfile && pnpm approve-builds && pnpm rebuild msw
 
       - name: Build static site
         run: pnpm run build
