@@ -5,9 +5,9 @@
   "packageManager": "pnpm@latest",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
-    "export": "next export",
-    "build:export": "next build && next export",
+    "build": "next build",
+    "export": "next build",
+    "build:export": "next build",
     "deploy": "pnpm run build && pnpm exec gh-pages --dotfiles -d out",
     "start": "next start",
     "typecheck": "tsc --noEmit",
