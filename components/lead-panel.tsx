@@ -130,7 +130,7 @@ export function LeadProvider({ children }: { children: ReactNode }) {
             </span>
             <div>
               <p className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground">
-                Tonal-Tech
+                Tonal-Tech 9
               </p>
               <p className="text-sm font-semibold leading-tight">Diagnóstico Técnico</p>
             </div>
@@ -365,7 +365,7 @@ function DiagnosticTicker() {
   useEffect(() => {
     const t = window.setInterval(() => setI((p) => (p + 1) % lines.length), 650)
     return () => window.clearInterval(t)
-  }, [])
+  }, [lines.length])
   return (
     <p className="font-mono text-xs text-muted-foreground">
       <span className="text-foreground">›</span> {lines[i]}

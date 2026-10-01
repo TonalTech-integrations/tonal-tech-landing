@@ -22,6 +22,12 @@ class Settings(BaseSettings):
     webhook_path: str = Field("/payments/webhook")
     app_url: str = Field("http://localhost:3000", env="APP_URL")
 
+    payments_mock: bool = Field(False, env="PAYMENTS_MOCK")
+
+    jwt_secret_key: str = Field(..., env="JWT_SECRET_KEY")
+    jwt_algorithm: str = Field("HS256", env="JWT_ALGORITHM")
+    access_token_expire_minutes: int = Field(60 * 24, env="ACCESS_TOKEN_EXPIRE_MINUTES")
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

@@ -5,10 +5,10 @@ const nextConfig = {
   output: 'export',
   basePath,
   assetPrefix: basePath,
-  trailingSlash: true,
-  typescript: {
-    ignoreBuildErrors: true,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },
