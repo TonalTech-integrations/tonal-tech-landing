@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -15,23 +17,21 @@ const solutions = [
 
 const navLinks = [
   { label: 'Tonal-Tech Labs', href: '#servicios' },
-  { label: 'Academy', href: '#academy' },
+  { label: 'Academy', href: '/academy' },
   { label: 'Casos de Éxito', href: '#casos' },
 ]
 
 function Logo() {
   return (
     <a href="#" className="flex items-center gap-2.5" aria-label="Tonal-Tech inicio">
-      <span className="flex size-8 items-center justify-center rounded-md border border-foreground/80 bg-foreground text-background">
-        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path
-            d="M3 6h14M10 6v11M6 10h8"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-          />
-        </svg>
-      </span>
+      <Image
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/logo.jpg`}
+        alt="Tonal-Tech"
+        width={32}
+        height={32}
+        unoptimized
+        className="size-8"
+      />
       <span className="text-[0.95rem] font-semibold tracking-tight">
         Tonal<span className="text-muted-foreground">-Tech</span>
       </span>
@@ -87,13 +87,13 @@ export function SiteHeader() {
             </div>
           </div>
           {navLinks.map((l) => (
-            <a
+            <Link
               key={l.label}
               href={l.href}
               className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -134,14 +134,14 @@ export function SiteHeader() {
             ))}
             <div className="my-2 h-px bg-border" />
             {navLinks.map((l) => (
-              <a
+              <Link
                 key={l.label}
                 href={l.href}
                 onClick={() => setMobileOpen(false)}
                 className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
             <Button
               onClick={() => {

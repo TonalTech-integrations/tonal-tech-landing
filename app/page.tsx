@@ -2,7 +2,7 @@ import { LeadProvider } from '@/components/lead-panel'
 import { SiteHeader } from '@/components/site-header'
 import { TonalHero } from '@/components/tonal-hero'
 import { ServiceGrid } from '@/components/service-grid'
-import { AcademyBanner } from '@/components/academy-banner'
+import { AcademySection } from '@/components/academy-section'
 import { ProofSection } from '@/components/proof-section'
 import { SiteFooter } from '@/components/site-footer'
 
@@ -14,7 +14,7 @@ export default function Page() {
         <main>
           <TonalHero />
           <ServiceGrid />
-          <AcademyBanner />
+          <AcademySection />
           <ProofSection />
         </main>
         <SiteFooter />

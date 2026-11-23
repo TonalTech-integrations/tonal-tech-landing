@@ -58,8 +58,8 @@ export function ServiceGrid() {
 
         {/* Grid */}
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((s, i) => (
-            <ServiceCard key={s.id} service={s} highlight={s.category === 'labs'} order={i} />
+          {visible.map((s) => (
+            <ServiceCard key={s.id} service={s} highlight={s.category === 'labs'} />
           ))}
         </div>
       </div>
@@ -70,11 +70,9 @@ export function ServiceGrid() {
 function ServiceCard({
   service,
   highlight,
-  order,
 }: {
   service: ServiceToken
   highlight?: boolean
-  order: number
 }) {
   const { openLead } = useLead()
   const Icon = service.icon

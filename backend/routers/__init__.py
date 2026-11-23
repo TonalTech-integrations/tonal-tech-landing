@@ -1,3 +1,3 @@
-from backend.routers import payments, videos
+from backend.routers import admin, auth, courses, leads, payments, videos
 
-__all__ = ["payments", "videos"]
+__all__ = ["admin", "auth", "courses", "leads", "payments", "videos"]
