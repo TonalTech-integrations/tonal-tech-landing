@@ -50,7 +50,10 @@ export function TonalHero() {
           className="tt-reveal mt-9 flex flex-col gap-3 sm:flex-row"
           style={{ animationDelay: '240ms' }}
         >
-          <Button onClick={() => openLead()} className="h-12 px-6 text-[0.95rem]">
+          <Button
+            onClick={() => openLead()}
+            className="h-12 bg-[#C9A227] px-6 text-[0.95rem] text-[#17140A] hover:bg-[#B8901F]"
+          >
             <ScanLine className="size-4" /> Agendar diagnóstico gratuito
           </Button>
           <Button

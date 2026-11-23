@@ -47,7 +47,9 @@ jobs:
           node-version: '22'
 
       - name: Install pnpm
-        run: npm install -g pnpm@latest
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.9
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -92,7 +94,9 @@ jobs:
           node-version: '22'
 
       - name: Install pnpm
-        run: npm install -g pnpm@latest
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.9
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
