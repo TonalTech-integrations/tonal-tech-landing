@@ -2,7 +2,7 @@ from datetime import date, datetime
 from enum import Enum
 from typing import Annotated, Literal, Optional
 
-from pydantic import BaseModel, EmailStr, Field, StringConstraints, field_validator
+from pydantic import BaseModel, EmailStr, Field, StringConstraints, field_validator, model_validator
 
 
 class CheckoutSessionRequest(BaseModel):
@@ -341,3 +341,18 @@ class LeadDetailResponse(BaseModel):
     lead: LeadDetail
     quote: Optional[QuoteResponse] = None
     quote_params: Optional[QuoteParamsResponse] = None
+
+
+class LeadUpdate(BaseModel):
+    """PATCH /admin/leads/{id} (002-04): al menos uno de los dos campos (422 si vacío)."""
+
+    status: Optional[Literal["recibido", "en_revision", "cotizado", "cerrado"]] = None
+    assigned_agent_id: Optional[int] = None
+
+    @model_validator(mode="after")
+    def _at_least_one_field(self) -> "LeadUpdate":
+        if self.status is None and self.assigned_agent_id is None:
+            raise ValueError(
+                "Se requiere al menos uno de: status, assigned_agent_id"
+            )
+        return self

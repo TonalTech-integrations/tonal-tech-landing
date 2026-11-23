@@ -144,6 +144,14 @@ class ProcessedWebhookEvent(Base):
 # válidas se validan a nivel de aplicación en el PATCH (002-04).
 LEAD_STATUS_RECIBIDO = "recibido"
 
+# Máquina de estados del lead (002 §5.5): cerrado es terminal (lista vacía).
+LEAD_ALLOWED_TRANSITIONS: dict[str, tuple[str, ...]] = {
+    "recibido": ("en_revision", "cerrado"),
+    "en_revision": ("cotizado", "cerrado"),
+    "cotizado": ("cerrado",),
+    "cerrado": (),
+}
+
 
 class Lead(Base):
     __tablename__ = "leads"
@@ -455,6 +463,44 @@ def get_lead_quote_params(lead_id: int) -> Optional[QuoteParams]:
             .order_by(QuoteParams.version.desc())
             .limit(1)
         )
+
+
+def update_lead(
+    lead_id: int,
+    status_value: Optional[str] = None,
+    assigned_agent_id: Optional[int] = None,
+) -> tuple[Optional[Lead], Optional[str], bool]:
+    """Actualiza estado y/o agente del lead (002-04).
+
+    Devuelve `(lead, error, agent_not_found)`:
+    - lead None + error -> transición inválida (mensaje con formato §3)
+    - agent_not_found True -> el agente no existe o no es admin (404)
+    - lead None sin error -> el lead no existe
+    """
+    with SessionLocal() as session:
+        lead = session.get(Lead, lead_id)
+        if lead is None:
+            return None, None, False
+        if status_value is not None and status_value != lead.status:
+            allowed = LEAD_ALLOWED_TRANSITIONS.get(lead.status, ())
+            if status_value not in allowed:
+                allowed_list = ", ".join(allowed) if allowed else "ninguna"
+                return (
+                    None,
+                    f"Transición inválida: {lead.status} -> {status_value}. "
+                    f"Permitidas desde {lead.status}: {allowed_list}",
+                    False,
+                )
+            lead.status = status_value
+        if assigned_agent_id is not None:
+            agent = session.get(User, assigned_agent_id)
+            if agent is None or not agent.is_admin:
+                return None, None, True
+            lead.assigned_agent_id = assigned_agent_id
+        lead.updated_at = datetime.utcnow()
+        session.commit()
+        session.refresh(lead)
+        return lead, None, False
 
 
 def list_leads(

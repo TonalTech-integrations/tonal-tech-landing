@@ -12,6 +12,7 @@ from backend.schemas import (
     LeadDetailResponse,
     LeadListResponse,
     LeadSummary,
+    LeadUpdate,
     QuoteParamsResponse,
     QuoteResponse,
 )
@@ -21,6 +22,7 @@ from backend.services.persistence import (
     get_lead_quote,
     get_lead_quote_params,
     list_leads,
+    update_lead,
 )
 
 router = APIRouter(tags=["leads"])
@@ -118,3 +120,31 @@ def get_lead_detail_endpoint(
             QuoteParamsResponse.model_validate(quote_params) if quote_params else None
         ),
     )
+
+
+@admin_router.patch("/leads/{lead_id}", response_model=LeadSummary)
+def update_lead_endpoint(
+    lead_id: int, payload: LeadUpdate, _: int = Depends(require_admin)
+) -> LeadSummary:
+    """Cambia el estado y/o asigna agente al lead (002-04).
+
+    Transiciones inválidas -> 400 con el formato de §3; agente inexistente o no
+    admin -> 404; lead inexistente -> 404.
+    """
+    lead, error, agent_not_found = update_lead(
+        lead_id,
+        status_value=payload.status,
+        assigned_agent_id=payload.assigned_agent_id,
+    )
+    if agent_not_found:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Agente no encontrado o sin rol de administrador",
+        )
+    if error is not None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    if lead is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Lead no encontrado"
+        )
+    return _lead_summary(lead)
