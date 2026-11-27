@@ -4,12 +4,12 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
       args:
-        - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+        - NEXT_PUBLIC_API_BASE_URL=http://192.168.249.189:8686
     ports:
       - 3000:80
     environment:
       - NEXT_TELEMETRY_DISABLED=1
-      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+      - NEXT_PUBLIC_API_BASE_URL=http://192.168.249.189:8686
     depends_on:
       - backend
 
@@ -19,5 +19,7 @@ services:
       dockerfile: backend/Dockerfile
     env_file:
       - backend/.env
+    environment:
+      - CORS_ORIGINS=http://192.168.249.189:3000,http://localhost:3000
     ports:
-      - 8000:8000
+      - 8686:8000

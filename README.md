@@ -120,6 +120,7 @@ También se agrega un archivo `.nojekyll` para evitar que GitHub Pages ignore ca
 - El backend usa CORS con orígenes permitidos definidos en `CORS_ORIGINS`.
 - El frontend consume la API usando `NEXT_PUBLIC_API_BASE_URL`.
 - El backend inicializa la base de datos en el evento `startup`.
+- En Podman Compose, `CORS_ORIGINS` permite el origen del frontend en `http://192.168.249.189:3000` y `http://localhost:3000`. Si cambia la IP o el puerto del frontend, actualiza este valor y recrea el servicio backend.
 
 ## Licencia
 
